@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title> Tickets</title>
+<script>
+function NumberOfTickets() 
+{
+	
+var tfirst=parseInt(document.getElementById("t1").value);
+var tsec=parseInt(document.getElementById("t2").value);
+var tthird=parseInt(document.getElementById("t3").value);
+var res=tfirst+tsec+tthird;	
+
+if(tfirst.isNaN){t11=0;}
+if(tsec.isNaN){t22=0;}
+if(tthird.isNaN){t33=0;}
+document.getElementById("ticketnum").value=res;
+ticketCost();
+return res;
+
+}
+
+function Check()
+{
+	var check1= document.getElementById("c1");
+	var check2= document.getElementById("c2");
+	var check3= document.getElementById("c3");
+	
+	if(check1.checked==true)
+	{
+		document.getElementById("t1").disabled=false;
+		
+	}
+	else
+	{   
+	    
+		document.getElementById("t1").disabled=true;
+		document.getElementById("t1").value=0;
+		NumberOfTickets();
+	}
+	
+	if(check2.checked==true)
+	{
+		document.getElementById("t2").disabled=false;
+		
+	}
+	else
+	{
+		document.getElementById("t2").disabled=true;
+		document.getElementById("t2").value=0;
+		NumberOfTickets();
+	}
+	if(check3.checked==true)
+	{
+		document.getElementById("t3").disabled=false;
+		
+	}
+	else
+	{
+		document.getElementById("t3").disabled=true;
+		document.getElementById("t3").value=0;
+		NumberOfTickets();
+	}
+	
+	
+}
+function ticketCost()
+{
+var tfirst=parseInt(document.getElementById("t1").value);
+var tsec=parseInt(document.getElementById("t2").value);
+var tthird=parseInt(document.getElementById("t3").value);
+
+var check1= parseInt(document.getElementById("c1").value);
+var check2= parseInt(document.getElementById("c2").value);
+var check3= parseInt(document.getElementById("c3").value);
+var result=(check1*tfirst)+(check2*tsec)+(check3*tthird);
+
+document.getElementById("tickCost").value=result;
+return result;
+
+}
+
+function Total()
+{
+var select=parseInt(document.getElementById("discount").selectedIndex);
+var t=ticketCost();
+var n=NumberOfTickets();
+var dis;
+var id = document.getElementById("ID").value;
+
+document.getElementById("tickCost").value=t;
+document.getElementById("ticketnum").value=n;
+
+if(id=="")
+{
+document.getElementById("userDiv").innerHTML= "enter a valid ID";
+}
+else{
+if(select==0)
+{
+document.getElementById("total").value=t;
+document.getElementById("disc").value=0;
+}
+
+else if(select==1)
+{
+
+dis =(t*10)/100;
+document.getElementById("total").value=t-dis;
+document.getElementById("disc").value=dis;
+}
+else if (select==2)
+{
+if(NumberOfTickets()>=4)
+{
+document.getElementById("total").value=t-10;
+document.getElementById("disDiv").innerHTML= "";
+document.getElementById("disc").value=10;
+}
+else 
+{
+document.getElementById("disDiv").innerHTML= "Your number of tickets is less than 4";
+}
+
+}
+document.getElementById("userDiv").innerHTML= "";
+
+}
+
+
+}
+function ClearValues()
+{
+document.getElementById("ID").value="";
+document.getElementById("c1").checked=false;
+document.getElementById("c2").checked=false;
+document.getElementById("c3").checked=false;
+document.getElementById("t1").value=0;
+document.getElementById("t2").value=0;
+document.getElementById("t3").value=0;
+document.getElementById("t1").disabled=true;
+document.getElementById("t2").disabled=true;
+document.getElementById("t3").disabled=true;
+document.getElementById("discount").selectedIndex=0;
+document.getElementById("tickCost").value=0;
+document.getElementById("ticketnum").value=0;
+document.getElementById("total").value=0;
+document.getElementById("userDiv").innerHTML= "";
+document.getElementById("disDiv").innerHTML= "";
+document.getElementById("disc").value=0;
+}
+
+</script>
+
+<style>
+
+div{color:red;}
+table{border:1px solid black;}
+
+
+
+</style>
+
+
+
+
+
+
+
+</head>
+<body>
+
+<form>
+<table>
+
+<tr> 
+<td>
+ User id:
+ </td>
+ <td>
+ <input type="text" id="ID">
+ <td>
+ <div id="userDiv"></div>
+</td>
+</td>
+
+</tr>
+<tr>
+<td>
+Type of Ticket: <br> 
+<input  type="checkbox" id="c1"value="10" onClick="Check()"/>Adult (£10)<br>
+<input  type="checkbox" id="c2"value="6" onClick="Check()"/>Senior (£6) <br>
+<input  type="checkbox" id="c3"value="5" onClick="Check()"/>Child (£5)<br>
+</td>
+<td>
+<input  type="number" max="4" min="0" id="t1" value="0" disabled onkeydown="return false" onclick="NumberOfTickets()"><br>
+<input type="number" max="4"min="0" id="t2" value="0" disabled onkeydown="return false" onclick="NumberOfTickets()"><br>
+<input type="number" max="4"min="0" id="t3" value="0" disabled onkeydown="return false" onclick="NumberOfTickets()">
+<br>
+</td>
+</tr>
+<tr>
+
+<td>
+Discounts:
+</td>
+<td>
+<select id="discount" >
+<option>none</option>
+<option>student 10%</option>
+<option>Group(10£ off 4or more)</option>
+</select>
+</td>
+<td><div id="disDiv"></div></td>
+</tr>
+<tr>
+<td>
+tickets cost : £ 
+</td>
+<td>
+<input id="tickCost" type="text" disabled value=""><br>
+</td>
+</tr>
+<tr>
+<td>
+tickets number : 
+</td>
+<td>
+<input id="ticketnum" type="text" disabled><br>
+</td>
+</tr>
+<tr>
+<td>Discount: £</td>
+<td><input type="text" id="disc" disabled> </td>
+
+</tr>
+<tr>
+<td>
+Order Cost : £
+</td>
+<td>
+ <input type="text" id="total" disabled>
+<br>
+</td>
+</tr>
+<tr>
+<td>
+<input type="button" value="calculate" id="B1" onClick="Total()">
+</td>
+<td>
+<input type="button" value="clear"  onclick="ClearValues()">
+</td>
+</tr>
+<tr>
+<td>
+<a href="customer.php"> back to log-in page </a>
+</td>
+</tr>
+</table>
+</form>
+
+
+</body>
+</html>
